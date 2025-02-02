@@ -108,7 +108,7 @@
         }
       }}
       on:blur={handleBlur}
-    >editing</textarea>
+    ></textarea>
   {:else if isActive}
     <div
       class="non-edit"
