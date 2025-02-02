@@ -1,6 +1,8 @@
 <script lang="ts">
   import { activeCell } from '../stores/activeCell.js';
+  import { get } from 'svelte/store';
 
+  export let id: string;
   export let content: string;
   export let row: number;
   export let column: number;
@@ -50,13 +52,7 @@
 </script>
 
 <style>
-  .grid-item {
-    background: #f4f4f4;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-height: 100px;
-  }
+
 
   .non-edit {
     width: 100%;
@@ -67,8 +63,8 @@
     font-size: inherit;
     color: inherit;
     padding: 0.5rem;
-    outline: none;
     transition: background-color 0.2s ease;
+    border: 2px solid #969ca5;
   }
 
   .non-edit:focus {
@@ -90,10 +86,14 @@
     background: white;
     resize: none;
   }
+
+  .editor:focus {
+    outline: 2px solid #4285f4;
+    background-color: #e0f7fa;
+  }
 </style>
 
 <div class="grid-item">
-  {JSON.stringify(isActive)}
   {#if editing}
     <textarea
       class="editor"
@@ -118,6 +118,10 @@
       on:dblclick={handleDoubleClick}
       on:keydown={(event) => { if (event.key === 'Enter') startEditing(); }}
     >
+      {internalContent}
+    </div>
+  {:else}
+    <div class="non-edit">
       {internalContent}
     </div>
   {/if}
