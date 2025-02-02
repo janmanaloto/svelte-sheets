@@ -1,12 +1,14 @@
 <script lang="ts">
   import { activeCell } from '../stores/activeCell.js';
-  import { onMount } from 'svelte';
 
-  const maxRows = 4;
-  const maxColumns = 4;
+  export let numRows: number;
+  export let numColumns: number;
+
+  const maxRows = numRows;
+  const maxColumns = numColumns;
 
   function handleKeydown(event: KeyboardEvent) {
-      const isEditing = document.activeElement?.tagName === 'TEXTAREA';
+      const isEditing = document.activeElement?.className.split(" ").find(className => className === 'editor') !== undefined;
       if (!isEditing && (
           event.key === 'ArrowDown' ||
           event.key === 'ArrowUp' ||
@@ -39,6 +41,6 @@
   }
 </style>
 
-<div class="grid" on:keydown={handleKeydown}>
+<div class="grid" role="grid" tabindex="0" style="--numColumns: {numColumns};" on:keydown={handleKeydown}>
   <slot />
 </div>

@@ -10,7 +10,8 @@
   let internalContent: string;
   let editing = false;
   let textareaElem: HTMLTextAreaElement;
-  let nonEditElem: HTMLDivElement;
+  let cellElem: HTMLDivElement;
+  let containerElem: HTMLDivElement;
 
   $: if (content && !internalContent) {
     internalContent = content;
@@ -36,14 +37,23 @@
     textareaElem.focus();
   }
 
-  $: if (nonEditElem) {
-    nonEditElem.focus();
+  $: if (cellElem) {
+    containerElem.focus();
   }
 
   function handleEditKeydown(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
-      editing = false;
-    }
+      if (event.key === 'Enter') {
+          event.preventDefault();
+          if (editing) {
+              editing = false;
+          } else if (isActive) {
+              startEditing();
+          }
+      }
+
+      if (event.key === 'Escape') {
+          editing = false;
+      }
   }
 
   function handleBlur() {
@@ -51,15 +61,40 @@
   }
 </script>
 
+<div class="grid-item" tabindex="0" role="gridcell"
+     on:click={handleNonEditClick}
+     on:dblclick={handleDoubleClick}
+     on:focus={handleNonEditClick}
+     on:keydown={handleEditKeydown}
+     bind:this={containerElem}
+>
+  {#if editing}
+    <textarea
+      class="editor"
+      bind:this={textareaElem}
+      bind:value={internalContent}
+      on:blur={handleBlur}></textarea>
+  {:else if isActive}
+    <div class="cell" bind:this={cellElem}>
+      {internalContent}
+    </div>
+  {:else}
+    <div class="cell">
+      {internalContent}
+    </div>
+  {/if}
+</div>
+
 <style>
 
   .grid-item {
       margin: -1px; /* Adjust margin to overlap borders */
   }
 
-  .non-edit {
+  .cell {
     width: 100%;
-    min-height: 80px;
+    height: 100%;
+      min-height: 1.5em;
     white-space: pre-wrap;
     font-family: inherit;
     font-size: inherit;
@@ -69,14 +104,14 @@
     box-sizing: border-box;
   }
 
-  .non-edit:focus {
+  .grid-item:focus {
     outline: 2px solid #4285f4;
     background-color: #e0f7fa;
   }
 
   .editor {
     width: 100%;
-    min-height: 80px;
+    height: 100%;
     outline: none;
     font-family: inherit;
     font-size: inherit;
@@ -92,37 +127,3 @@
     outline: 2px solid #4285f4;
   }
 </style>
-
-<div class="grid-item" on:click={handleNonEditClick} on:dblclick={handleDoubleClick}>
-  {#if editing}
-    <textarea
-      class="editor"
-      bind:this={textareaElem}
-      bind:value={internalContent}
-      on:keydown={(event) => {
-        if (event.key === 'Enter') {
-          event.preventDefault();
-          editing = false;
-        } else {
-          handleEditKeydown(event);
-        }
-      }}
-      on:blur={handleBlur}
-    ></textarea>
-  {:else if isActive}
-    <div
-      class="non-edit"
-      bind:this={nonEditElem}
-      tabindex="0"
-      on:click={handleNonEditClick}
-      on:dblclick={handleDoubleClick}
-      on:keydown={(event) => { if (event.key === 'Enter') startEditing(); }}
-    >
-      {internalContent}
-    </div>
-  {:else}
-    <div class="non-edit">
-      {internalContent}
-    </div>
-  {/if}
-</div>

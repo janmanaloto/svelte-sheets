@@ -35,6 +35,10 @@
 </main>
 
 <style>
+  :global(body) {
+      margin: 0;
+      padding: 0;
+  }
   main {
     margin: 0 auto;
     height: 100%;
