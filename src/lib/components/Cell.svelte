@@ -53,6 +53,9 @@
 
 <style>
 
+  .grid-item {
+      margin: -1px; /* Adjust margin to overlap borders */
+  }
 
   .non-edit {
     width: 100%;
@@ -63,6 +66,7 @@
     color: inherit;
     transition: background-color 0.2s ease;
     border: 2px solid #969ca5;
+    box-sizing: border-box;
   }
 
   .non-edit:focus {
