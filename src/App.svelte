@@ -4,18 +4,38 @@
 	import BottomBar from './lib/components/BottomBar.svelte';
 
   const gridData = [
-    ["Cell 1: Click to edit", "Cell 2: Click to edit", "Cell 3: Click to edit", "Cell 4: Click to edit"],
-    ["Cell 4: Click to edit", "Cell 5: Click to edit", "Cell 6: Click to edit", "Cell 7: Click to edit"],
-    ["Cell 7: Click to edit", "Cell 8: Click to edit", "Cell 9: Click to edit", "Cell 10: Click to edit"],
-    ["Cell 10: Click to edit", "Cell 11: Click to edit", "Cell 12: Click to edit", "Cell 13: Click to edit"],
+    [
+      { content: "Cell 1: Click to edit", row: 1, column: 1 },
+      { content: "Cell 2: Click to edit", row: 1, column: 2 },
+      { content: "Cell 3: Click to edit", row: 1, column: 3 },
+      { content: "Cell 4: Click to edit", row: 1, column: 4 }
+    ],
+    [
+      { content: "Cell 1: Click to edit", row: 2, column: 1 },
+      { content: "Cell 2: Click to edit", row: 2, column: 2 },
+      { content: "Cell 3: Click to edit", row: 2, column: 3 },
+      { content: "Cell 4: Click to edit", row: 2, column: 4 }
+    ],
+    [
+      { content: "Cell 1: Click to edit", row: 3, column: 1 },
+      { content: "Cell 2: Click to edit", row: 3, column: 2 },
+      { content: "Cell 3: Click to edit", row: 3, column: 3 },
+      { content: "Cell 4: Click to edit", row: 3, column: 4 }
+    ],
+    [
+      { content: "Cell 1: Click to edit", row: 4, column: 1 },
+      { content: "Cell 2: Click to edit", row: 4, column: 2 },
+      { content: "Cell 3: Click to edit", row: 4, column: 3 },
+      { content: "Cell 4: Click to edit", row: 4, column: 4 }
+    ]
   ];
 </script>
 
 <main>
   <Grid>
     {#each gridData as row, rowIndex}
-      {#each row as content, columnIndex}
-        <Cell id={`cell-${rowIndex + 1}-${columnIndex + 1}`} row={rowIndex + 1} column={columnIndex + 1} content={content} />
+      {#each row as cell}
+        <Cell id={`cell-${cell.row}-${cell.column}`} row={cell.row} column={cell.column} content={cell.content} />
       {/each}
     {/each}
   </Grid>
