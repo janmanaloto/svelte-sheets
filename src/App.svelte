@@ -3,39 +3,31 @@
   import Cell from './lib/components/Cell.svelte';
 	import BottomBar from './lib/components/BottomBar.svelte';
 
+  const pageOptions = {
+    numRows: 4,
+    numColumns: 4
+  };
+
   const gridData = [
-    [
-      { content: "Cell 1: Click to edit", row: 1, column: 1 },
-      { content: "Cell 2: Click to edit", row: 1, column: 2 },
-      { content: "Cell 3: Click to edit", row: 1, column: 3 },
-      { content: "Cell 4: Click to edit", row: 1, column: 4 }
-    ],
-    [
-      { content: "Cell 1: Click to edit", row: 2, column: 1 },
-      { content: "Cell 2: Click to edit", row: 2, column: 2 },
-      { content: "Cell 3: Click to edit", row: 2, column: 3 },
-      { content: "Cell 4: Click to edit", row: 2, column: 4 }
-    ],
-    [
-      { content: "Cell 1: Click to edit", row: 3, column: 1 },
-      { content: "Cell 2: Click to edit", row: 3, column: 2 },
-      { content: "Cell 3: Click to edit", row: 3, column: 3 },
-      { content: "Cell 4: Click to edit", row: 3, column: 4 }
-    ],
-    [
-      { content: "Cell 1: Click to edit", row: 4, column: 1 },
-      { content: "Cell 2: Click to edit", row: 4, column: 2 },
-      { content: "Cell 3: Click to edit", row: 4, column: 3 },
-      { content: "Cell 4: Click to edit", row: 4, column: 4 }
-    ]
+    { content: "Cell 1: Click to edit", row: 1, column: 1 },
+    { content: "Cell 2: Click to edit", row: 1, column: 2 },
+    { content: "Cell 3: Click to edit", row: 1, column: 3 },
+    { content: "Cell 4: Click to edit", row: 1, column: 4 },
+    { content: "Cell 9: Click to edit", row: 3, column: 1 },
+    { content: "Cell 10: Click to edit", row: 3, column: 2 },
+    { content: "Cell 11: Click to edit", row: 3, column: 3 },
+    { content: "Cell 12: Click to edit", row: 3, column: 4 },
+    { content: "Cell 14: Click to edit", row: 4, column: 2 },
+    { content: "Cell 15: Click to edit", row: 4, column: 3 },
+    { content: "Cell 16: Click to edit", row: 4, column: 4 }
   ];
 </script>
 
 <main>
-  <Grid>
-    {#each gridData as row, rowIndex}
-      {#each row as cell}
-        <Cell id={`cell-${cell.row}-${cell.column}`} row={cell.row} column={cell.column} content={cell.content} />
+  <Grid numRows={pageOptions.numRows} numColumns={pageOptions.numColumns}>
+    {#each Array(pageOptions.numRows) as _, rowIndex}
+      {#each Array(pageOptions.numColumns) as _, columnIndex}
+        <Cell id={`cell-${rowIndex + 1}-${columnIndex + 1}`} row={rowIndex + 1} column={columnIndex + 1} content={gridData.find(cell => cell.row === rowIndex + 1 && cell.column === columnIndex + 1)?.content || ""} />
       {/each}
     {/each}
   </Grid>
