@@ -13,7 +13,7 @@
   let cellElem: HTMLDivElement;
   let containerElem: HTMLDivElement;
 
-  $: if (content && !internalContent) {
+  $: if (content) {
     internalContent = content;
   }
 
