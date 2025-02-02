@@ -1,6 +1,11 @@
-<script>
-  export let title = 'Cell';
-  export let description = 'This is a cell.';
+<script lang="ts">
+  export let content: string;
+  let internalContent: string;
+  let active = false;
+
+  $: if (content && !internalContent) {
+    internalContent = content;
+  }
 </script>
 
 <style>
@@ -9,20 +14,46 @@
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 100px;
   }
 
-  .grid-item h3 {
-    margin: 0 0 0.5rem 0;
-    color: #333;
+  .content {
+    width: 100%;
+    min-height: 80px;
+    margin-bottom: 0.5rem;
+    outline: none;
+    white-space: pre-wrap;
+    font-family: inherit;
+    font-size: inherit;
+    background: none;
+    border: none;
+    resize: none;
+    color: inherit;
+    display: block;
+    padding: 0;
   }
 
-  .grid-item p {
-    margin: 0;
-    color: #666;
+  .content.active {
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background: white;
+  }
+
+  button {
+    display: block;
+    margin-top: 0.5rem;
   }
 </style>
 
 <div class="grid-item">
-  <h3>{title}</h3>
-  <p>{description}</p>
-</div> 
+  <textarea
+    class="content"
+    class:active
+    readonly={!active}
+    bind:value={internalContent}
+  ></textarea>
+  <button on:click={() => active = !active}>
+    {active ? 'Save' : 'Edit'}
+  </button>
+</div>

@@ -14,10 +14,10 @@
 <main>
   <h1>Minimal Grid Example</h1>
   <Grid>
-    <Cell title="Item 1" description="This is the first item." />
-    <Cell title="Item 2" description="This is the second item." />
-    <Cell title="Item 3" description="This is the third item." />
-    <Cell title="Item 4" description="This is the fourth item." />
+    <Cell content="Cell 1: Click to edit" />
+    <Cell content="Cell 2: Click to edit" />
+    <Cell content="Cell 3: Click to edit" />
+    <Cell content="Cell 4: Click to edit" />
   </Grid>
 </main>
 
