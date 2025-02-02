@@ -2,14 +2,22 @@
   import Grid from './lib/components/Grid.svelte';
   import Cell from './lib/components/Cell.svelte';
 	import BottomBar from './lib/components/BottomBar.svelte';
+
+  const gridData = [
+    ["Cell 1: Click to edit", "Cell 2: Click to edit", "Cell 3: Click to edit", "Cell 4: Click to edit"],
+    ["Cell 4: Click to edit", "Cell 5: Click to edit", "Cell 6: Click to edit", "Cell 7: Click to edit"],
+    ["Cell 7: Click to edit", "Cell 8: Click to edit", "Cell 9: Click to edit", "Cell 10: Click to edit"],
+    ["Cell 10: Click to edit", "Cell 11: Click to edit", "Cell 12: Click to edit", "Cell 13: Click to edit"],
+  ];
 </script>
 
 <main>
   <Grid>
-    <Cell id="1" row={1} column={1} content="Cell 1: Click to edit" />
-    <Cell id="2" row={1} column={2} content="Cell 2: Click to edit" />
-    <Cell id="3" row={1} column={3} content="Cell 3: Click to edit" />
-    <Cell id="4" row={2} column={1} content="Cell 4: Click to edit" />
+    {#each gridData as row, rowIndex}
+      {#each row as content, columnIndex}
+        <Cell id={`cell-${rowIndex + 1}-${columnIndex + 1}`} row={rowIndex + 1} column={columnIndex + 1} content={content} />
+      {/each}
+    {/each}
   </Grid>
   <BottomBar />
 </main>
@@ -34,4 +42,4 @@
     padding: 1rem;
     text-align: center;
   }
-</style> 
+</style>

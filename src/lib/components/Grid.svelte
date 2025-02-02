@@ -2,8 +2,8 @@
   import { activeCell } from '../stores/activeCell.js';
   import { onMount } from 'svelte';
 
-  const maxRows = 2;
-  const maxColumns = 3;
+  const maxRows = 4;
+  const maxColumns = 4;
 
   onMount(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -42,8 +42,7 @@
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
   }
 </style>
 

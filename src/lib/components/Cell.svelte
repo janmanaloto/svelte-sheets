@@ -57,12 +57,10 @@
   .non-edit {
     width: 100%;
     min-height: 80px;
-    margin-bottom: 0.5rem;
     white-space: pre-wrap;
     font-family: inherit;
     font-size: inherit;
     color: inherit;
-    padding: 0.5rem;
     transition: background-color 0.2s ease;
     border: 2px solid #969ca5;
   }
@@ -75,16 +73,15 @@
   .editor {
     width: 100%;
     min-height: 80px;
-    margin-bottom: 0.5rem;
     outline: none;
     font-family: inherit;
     font-size: inherit;
     color: inherit;
     border: 1px solid #ccc;
-    padding: 0.5rem;
     border-radius: 4px;
     background: white;
     resize: none;
+    box-sizing: border-box;
   }
 
   .editor:focus {
