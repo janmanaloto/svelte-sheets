@@ -89,11 +89,10 @@
 
   .editor:focus {
     outline: 2px solid #4285f4;
-    background-color: #e0f7fa;
   }
 </style>
 
-<div class="grid-item">
+<div class="grid-item" on:click={handleNonEditClick} on:dblclick={handleDoubleClick}>
   {#if editing}
     <textarea
       class="editor"
