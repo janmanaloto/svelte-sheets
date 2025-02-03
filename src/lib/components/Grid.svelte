@@ -37,10 +37,14 @@
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: 50px repeat(var(--numColumns), 200px);
+    grid-auto-rows: minmax(40px, auto);
+    gap: 1px;
+    overflow: auto;
+    max-width: 100%;
   }
 </style>
 
-<div class="grid" role="grid" tabindex="0" style="--numColumns: {numColumns};" on:keydown={handleKeydown}>
+<div class="grid" role="grid" tabindex="-1" style="--numColumns: {numColumns};" on:keydown={handleKeydown}>
   <slot />
 </div>

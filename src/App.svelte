@@ -1,6 +1,6 @@
 <script>
   import Grid from './lib/components/Grid.svelte';
-  import Cell from './lib/components/Cell.svelte';
+  import TextCell from './lib/components/TextCell.svelte';
 	import BottomBar from './lib/components/BottomBar.svelte';
 
   const pageOptions = {
@@ -25,10 +25,16 @@
 
 <main>
   <Grid numRows={pageOptions.numRows} numColumns={pageOptions.numColumns}>
-    {#each Array(pageOptions.numRows) as _, rowIndex}
+    <div class="header-cell"></div>
       {#each Array(pageOptions.numColumns) as _, columnIndex}
-        <Cell id={`cell-${rowIndex + 1}-${columnIndex + 1}`} row={rowIndex + 1} column={columnIndex + 1} content={gridData.find(cell => cell.row === rowIndex + 1 && cell.column === columnIndex + 1)?.content || ""} />
+        <div class="header-cell">{String.fromCharCode(65 + columnIndex)}</div>
       {/each}
+
+    {#each Array(pageOptions.numRows) as _, rowIndex}
+        <div class="header-cell">{rowIndex + 1}</div>
+        {#each Array(pageOptions.numColumns) as _, columnIndex}
+          <TextCell id={`cell-${rowIndex + 1}-${columnIndex + 1}`} row={rowIndex + 1} column={columnIndex + 1} content={gridData.find(cell => cell.row === rowIndex + 1 && cell.column === columnIndex + 1)?.content || ""} />
+        {/each}
     {/each}
   </Grid>
   <BottomBar />
@@ -49,13 +55,22 @@
     color: #333;
   }
 
-  BottomBar {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #f8f9fa;
-    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    text-align: center;
+  .header-row {
+    display: flex;
+  }
+
+  .header-cell {
+    max-height: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f0f0f0;
+    font-weight: bold;
+    border: 1px solid #ccc;
+  }
+
+  .row {
+    display: flex;
   }
 </style>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import BaseCell from './BaseCell.svelte';
   import { activeCell } from '../stores/activeCell.js';
   import { get } from 'svelte/store';
 
@@ -10,50 +11,33 @@
   let internalContent: string;
   let editing = false;
   let textareaElem: HTMLTextAreaElement;
-  let cellElem: HTMLDivElement;
-  let containerElem: HTMLDivElement;
+  let baseCellComponent: BaseCell;
 
   $: if (content) {
     internalContent = content;
   }
 
-  $: isActive = $activeCell?.row === row && $activeCell?.column === column;
-
-  function handleNonEditClick() {
-    activeCell.set({ row, column });
-  }
-
-  function handleDoubleClick() {
-    startEditing();
-  }
-
   function startEditing() {
-    if (isActive) {
-      editing = true;
-    }
+    console.log('startEditing');
+    editing = true;
   }
 
   $: if (editing && textareaElem) {
     textareaElem.focus();
   }
 
-  $: if (cellElem) {
-    containerElem.focus();
-  }
-
   function handleEditKeydown(event: KeyboardEvent) {
-      if (event.key === 'Enter') {
-          event.preventDefault();
-          if (editing) {
-              editing = false;
-          } else if (isActive) {
-              startEditing();
-          }
-      }
+    console.log(event.key);
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      editing = false;
+      baseCellComponent.focusCell();
+    }
 
-      if (event.key === 'Escape') {
-          editing = false;
-      }
+    if (event.key === 'Escape') {
+      editing = false;
+      baseCellComponent.focusCell();
+    }
   }
 
   function handleBlur() {
@@ -61,40 +45,34 @@
   }
 </script>
 
-<div class="grid-item" tabindex="0" role="gridcell"
-     on:click={handleNonEditClick}
-     on:dblclick={handleDoubleClick}
-     on:focus={handleNonEditClick}
-     on:keydown={handleEditKeydown}
-     bind:this={containerElem}
+<BaseCell 
+  bind:this={baseCellComponent}
+  {id} 
+  {row} 
+  {column} 
+  {content} 
+  on:startEdit={startEditing}
 >
   {#if editing}
     <textarea
       class="editor"
       bind:this={textareaElem}
       bind:value={internalContent}
-      on:blur={handleBlur}></textarea>
-  {:else if isActive}
-    <div class="cell" bind:this={cellElem}>
-      {internalContent}
-    </div>
+      on:blur={handleBlur}
+      on:keydown={handleEditKeydown}
+    ></textarea>
   {:else}
     <div class="cell">
       {internalContent}
     </div>
   {/if}
-</div>
+</BaseCell>
 
 <style>
-
-  .grid-item {
-      margin: -1px; /* Adjust margin to overlap borders */
-  }
-
   .cell {
     width: 100%;
     height: 100%;
-      min-height: 1.5em;
+    min-height: 1.5em;
     white-space: pre-wrap;
     font-family: inherit;
     font-size: inherit;
@@ -102,11 +80,6 @@
     transition: background-color 0.2s ease;
     border: 2px solid #969ca5;
     box-sizing: border-box;
-  }
-
-  .grid-item:focus {
-    outline: 2px solid #4285f4;
-    background-color: #e0f7fa;
   }
 
   .editor {
@@ -126,4 +99,4 @@
   .editor:focus {
     outline: 2px solid #4285f4;
   }
-</style>
+</style> 
